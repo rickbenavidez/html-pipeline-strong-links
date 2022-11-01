@@ -17,7 +17,7 @@ module HTML
           end
         end
 
-        doc
+        doc.to_html
       end
     end
   end

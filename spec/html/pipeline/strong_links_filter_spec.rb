@@ -9,6 +9,18 @@ describe HTML::Pipeline::StrongLinks do
     expect(HTML::Pipeline::StrongLinks::VERSION).not_to be nil
   end
 
+  context "within a pipeline" do
+    let(:pipeline) { HTML::Pipeline.new([subject]) }
+
+    it "should not allow javascript links" do
+      expect(pipeline.call(bad_html)[:output].to_s).to eq('Bad Stuff')
+    end
+
+    it "should allow good links" do
+      expect(pipeline.call(good_html)[:output].to_s).to eq('<a href="https://blog.leanstack.com/" rel="noopener noreferrer" target="_blank" data-turbo="false">LEANSTACK</a>')
+    end
+  end
+
   context "good links" do
     it "updates links" do
       expect(subject.to_html(good_html).to_s).to eq('<a href="https://blog.leanstack.com/" rel="noopener noreferrer" target="_blank" data-turbo="false">LEANSTACK</a>')
