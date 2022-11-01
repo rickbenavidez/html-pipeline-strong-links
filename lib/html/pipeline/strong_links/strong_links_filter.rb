@@ -1,8 +1,7 @@
 module HTML
   class Pipeline
-    class StrongLinksFilter < TextFilter
+    class StrongLinksFilter < Filter
       def call
-        doc = Nokogiri::HTML::DocumentFragment.parse(@text)
         doc.search("a").each do |element|
           next if element.blank? || element.comment?
           next if element["href"].to_s.empty?
